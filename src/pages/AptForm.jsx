@@ -1,8 +1,17 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
+
+// contextos
+import { ThemeContext } from "../context/theme.context"
 
 function AptForm() {
+
+  const { switchBtnTheme } = useContext(ThemeContext)
+
+  // aqui inicializamos useNavigate
+  const navigate = useNavigate()
 
   // podriamos crear 3 estados (uno para cada campo) pero...
   // para practicar, haremos un solo estado con toda la info
@@ -28,13 +37,15 @@ function AptForm() {
     // contactar al backend para que cree un nuevo piso con la info del formulario
     try {
 
-      
+
       await axios.post("https://ironbnb-m3.herokuapp.com/apartments", aptToAdd)
       console.log("piso agregado!")
-
+      // quiero redireccionar al usuario a lista de pisos
+      navigate("/pisos")
 
     } catch (error) {
-      console.log(error)
+      navigate("/error")
+
     }
 
   }
@@ -61,7 +72,7 @@ function AptForm() {
 
         <br />
 
-        <button>Agregar</button>
+        <button style={switchBtnTheme()}>Agregar</button>
 
       </form>
 

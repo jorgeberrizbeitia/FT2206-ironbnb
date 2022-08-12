@@ -10,7 +10,7 @@ function Navbar() {
   }
 
   const inactiveStyles = {
-    color: "black",
+    color: "darkGray",
     textDecoration: "none",
     margin: "5px"
   }
