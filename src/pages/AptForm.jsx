@@ -1,8 +1,72 @@
 import React from 'react'
+import { useState } from 'react'
+import axios from "axios"
 
 function AptForm() {
+
+  // podriamos crear 3 estados (uno para cada campo) pero...
+  // para practicar, haremos un solo estado con toda la info
+  const [aptToAdd, setAptToAdd] = useState({
+    title: "",
+    img: "",
+    pricePerDay: 0
+  })
+
+  const handleChange = (event) => {
+    console.log("name: ", event.target.name) // img, title, pricePerDay
+    console.log(event.target.value)
+    // aptToAdd.title = event.target.value // NUNCA MUTEMOS DIRECTAMENTE EL ESTADO
+    const stateClone = {...aptToAdd}
+    stateClone[event.target.name] = event.target.value
+    // stateClone["title"] = event.target.value
+    setAptToAdd(stateClone)
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+
+    // contactar al backend para que cree un nuevo piso con la info del formulario
+    try {
+
+      
+      await axios.post("https://ironbnb-m3.herokuapp.com/apartments", aptToAdd)
+      console.log("piso agregado!")
+
+
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
+
   return (
-    <div>AptForm</div>
+    <div>
+
+      <h3>Agregar un nuevo piso</h3>
+      
+      <form onSubmit={handleSubmit}>
+
+        <label htmlFor="title">Titulo:</label>
+        <input type="text" name="title" onChange={handleChange} value={aptToAdd.title}/>
+
+        <br />
+
+        <label htmlFor="img">Imagen:</label>
+        <input type="text" name="img" onChange={handleChange} value={aptToAdd.img}/>
+
+        <br />
+
+        <label htmlFor="pricePerDay">Precio:</label>
+        <input type="number" name="pricePerDay" onChange={handleChange} value={aptToAdd.pricePerDay}/>
+
+        <br />
+
+        <button>Agregar</button>
+
+      </form>
+
+
+    </div>
   )
 }
 
