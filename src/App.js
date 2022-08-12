@@ -1,23 +1,36 @@
-import logo from './logo.svg';
 import './App.css';
+
+// pages
+import AptDetails from './pages/AptDetails';
+import AptForm from './pages/AptForm';
+import AptList from './pages/AptList';
+import Home from './pages/Home';
+
+// components
+import Navbar from './components/Navbar';
+
+// from packages
+import { Route, Routes } from "react-router-dom"
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <Navbar />
+
+      <div>
+
+        <Routes>
+
+          <Route path="/" element={<Home />}/>
+          <Route path="/pisos" element={<AptList />}/>
+          <Route path="/pisos/:id/details" element={<AptDetails />}/>
+          <Route path="/pisos/add-form" element={<AptForm />}/>          
+
+        </Routes>
+
+      </div>
+
     </div>
   );
 }
